@@ -7,7 +7,7 @@ run: $(BIN)
 	valgrind -q ./$(BIN)
 
 # Main executable
-$(BIN): -lzmi
+$(BIN): -lzmq
 
 clean:
 	rm -f $(BIN)
