@@ -1,0 +1,48 @@
+# For how many seconds must 
+# we survive "the shower"
+duration 120
+
+# The start for the random-gen 
+seed 12345
+
+player-colors { fresh: white, dead: gray }
+
+player-sprite fresh {
+▓▓▓▓▓
+▓o.o▓
+▓▓O▓▓
+}
+
+player-sprite dead {
+░░░░░
+░x░x░
+░░0░░
+}
+
+# Bonus objects.
+# can have have attribs = time/speed/color
+# 'quantum' is quantum.
+# 'time' is the given seconds of bonus given. Aka "afterglow"
+# 'speed' is how many millisec obj uses from top to bottom
+# 'color' is color.
+silver $$ { quantum:2 , time:5 , speed: 200 , color:bold }
+silver ŮŮ { quantum:2 , time:10 , speed: 50 , color:bold }
+
+# Badguys
+# can have attribs = speed/color 
+badguy Y { speed: 100 , color: yellow }
+badguy V { speed: 300 , color: red }
+badguy v { speed: 50 , color: green }
+badguy | { speed: 200 , color: white }
+
+# Frame(s) for left n right sides.
+# Will alternate down the y-axis
+# can have attrib = color
+frame █ { color: red }
+frame | { color: brown }
+frame ┃ { color: orange }
+
+# BottomLine(s)
+# can have attrib = color
+bottomline ▀ { color: red }
+bottomline " { color: brown }
