@@ -16,15 +16,6 @@
 <SPRITE>[^\n]* { printf( "\t%s" , yytext ); }
 <SPRITE>\n { printf("\n"); /* no token */ }
 
-"DURATION" { printf("_Duration_"); }
-"SEED" { printf("_Seed_"); }
-"PLAYER-ATTRIB" { printf("_Player-attrib_"); }
-"PLAYER-SPRITE" { printf("_Player-sprite_"); }
-"BADGUY" { printf("_Badguy_"); }
-"SILVER" { printf("_Silver_"); }
-"FRAME" { printf("_Frame_"); }
-"BOTTOMLINE" { printf("_BottomLine_"); }
-
 <ATTRIB>"}" { printf("\n}\n"); BEGIN INITIAL; }
 <ATTRIB>"QUANTUM" { printf(" @Quantum "); }
 <ATTRIB>"TIME" { printf(" @Time "); }
@@ -36,16 +27,20 @@
 <ATTRIB>[^ \t\n:]+ { printf(" TXT-VAL(%s) ", yytext ); }
 <ATTRIB>[ \t\n] /* irrelevant */
 
-
+"DURATION" { printf("_Duration_"); }
+"SEED" { printf("_Seed_"); }
+"PLAYER-ATTRIB" { printf("_Player-attrib_"); }
+"PLAYER-SPRITE" { printf("_Player-sprite_"); }
+"BADGUY" { printf("_Badguy_"); }
+"SILVER" { printf("_Silver_"); }
+"FRAME" { printf("_Frame_"); }
+"BOTTOMLINE" { printf("_BottomLine_"); }
 "[["[ \t]*\n { printf("\n\[\[\n"); BEGIN SPRITE; }
 "{" { printf(" {\n"); BEGIN ATTRIB; }
-
 [0-9]+ { printf(" INT(%s) ", yytext ); }
-[ \t\n] /* irrelevant */
-
 ^[ \t]*"#" { printf("# ", yytext); BEGIN COMMENT; }
-
 [^ \t\n]+ { printf(" TXT(%s) ", yytext ); }
+[ \t\n] /* irrelevant */
 . { printf( "~" ); } /**/
 %%
 
