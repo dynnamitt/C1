@@ -10,11 +10,12 @@ player-attrib fresh {
 	 color: white } 
 
 player-attrib dead 
-{ 
+{
 	color :gray
 	 }
 
-player-sprite fresh [[  
+player-sprite fresh 
+[[  
 ▓▓▓▓▓
 ▓o.o▓
 ▓▓O▓▓
@@ -39,9 +40,12 @@ Silver :: { quantum:2 , time:10 , speed: 50 , color:bold|blinking|green }
 # Badguys
 # can have attribs = speed/color 
 badguy Y { speed: 100 , color: yellow }
-badguy V { speed: 300 , color: red }
-badGuy v { speed: 50 , color: green }
-badguy | { speed: 200 , color: white }
+badguy "V" { speed: 300 , color: red }
+badGuy "v" { speed: 50 , color: green }
+badguy '|' { speed: 200 , color: white }
+badguy '{' { speed: 200 , color: white }
+badguy "{" { speed: 200 , color: white }
+
 
 # Frame(s) for left n right sides.
 # Will alternate down the y-axis
@@ -53,4 +57,8 @@ frame ┃ { color: orange }
 # BottomLine(s)
 # can have attrib = color
 bottomline ▀ { color: red }
-BottomLine " { color: brown }
+BottomLine '"' { color: brown }
+
+
+
+"ba"d'line'
