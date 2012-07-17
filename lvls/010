@@ -7,11 +7,11 @@ seed 12345
 
 # some attribs for the two states
 player-attrib fresh {
-	 color: white } 
+	 color white } 
 
 player-attrib dead 
 {
-	color :gray
+	color gray
 	 }
 
 player-sprite fresh 
@@ -34,8 +34,8 @@ player-sprite dead [[
 # 'speed' is how many millisec obj uses from top to bottom
 # 'color' is color.
 silver $$ { quantum : 2 , time:5 , speed: 200 , color:bold }
-Silver ŮŮ { quantum:2 , time:10 , speed: 50 , color:bold | blinking }
-Silver :: { quantum:2 , time:10 , speed: 50 , color:bold|blinking|green }
+Silver ŮŮ { quantum 2 , time:10 , speed: 50 , color:bold | blinking }
+Silver :: { quantum 2 , time 10 , speed  50 , color bold|blinking|green }
 
 # Badguys
 # can have attribs = speed/color 

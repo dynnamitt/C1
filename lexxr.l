@@ -3,7 +3,7 @@
 
 %x COMMENT
 %x SPRITE
-%x ATTRIB
+%x MAP
 %{
 _Bool sprite_new = 0;
 %}
@@ -21,34 +21,34 @@ _Bool sprite_new = 0;
 	}
 /* shouldnt printf if at first line. NoToken */ }
 
-<ATTRIB>"}" { printf("\n}\n"); BEGIN INITIAL; }
-<ATTRIB>"QUANTUM" { printf(" @Quantum "); }
-<ATTRIB>"TIME" { printf(" @Time "); }
-<ATTRIB>"SPEED" { printf(" @Speed "); }
-<ATTRIB>"COLOR" { printf(" @Color "); }
-<ATTRIB>":" { printf(":");  }
-<ATTRIB>"," { printf(",\n");  }
-<ATTRIB>[0-9]+ { printf(" INT-VAL(%s) ", yytext ); }
-<ATTRIB>[^ \t\n:]+ { printf(" TXT-VAL(%s) ", yytext ); }
-<ATTRIB>[ \t\n] /* irrelevant */
+<MAP>"}" { printf("\n}\n"); BEGIN INITIAL; }
+<MAP>"QUANTUM" { printf(" @Quantum "); }
+<MAP>"TIME" { printf(" @Time "); }
+<MAP>"SPEED" { printf(" @Speed "); }
+<MAP>"COLOR" { printf(" @Color "); }
+<MAP>":" { printf(":");  }
+<MAP>"," { printf(",\n");  }
+<MAP>[0-9]+ { printf(" INT-VAL(%s) ", yytext ); }
+<MAP>[^ \t\n:]+ { printf(" TXT-VAL(%s) ", yytext ); }
+<MAP>[ \t\n] /* irrelevant */
 
 "DURATION" { printf("\n_Duration_"); }
 "SEED" { printf("\n_Seed_"); }
-"PLAYER-ATTRIB" { printf("\n_Player-attrib_"); }
+"PLAYER-MAP" { printf("\n_Player-attrib_"); }
 "PLAYER-SPRITE" { printf("\n_Player-sprite_"); }
 "BADGUY" { printf("\n_Badguy_"); }
 "SILVER" { printf("\n_Silver_"); }
 "FRAME" { printf("\n_Frame_"); }
 "BOTTOMLINE" { printf("\n_BottomLine_"); }
 "[["[ \t]*$ { printf("\n\[\[\n"); sprite_new=1; BEGIN SPRITE; }
-" {"[ \t\n]* { printf(" {\n"); BEGIN ATTRIB; }
-^"{"[ \t]*$ { printf(" {\n"); BEGIN ATTRIB; }
+" {"[ \t\n]* { printf(" {\n"); BEGIN MAP; }
+^"{"[ \t]*$ { printf(" {\n"); BEGIN MAP; }
 [0-9]+ { printf(" INT(%s) ", yytext ); }
 ^[ \t]*"#" { printf("# "); BEGIN COMMENT; }
 ["]?[^ \t\n"]+["]? { printf(" TXT(%s) ", yytext ); }
 [']?[^ \t\n']+[']? { printf(" TXT(%s) ", yytext ); }
-[ \t\n] /* irrelevant */
-. { printf( "~" ); } /**/
+[ \t\n]   /* irrelevant */
+. { printf( "~" ); } /* */
 %%
 
 int main()
