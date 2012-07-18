@@ -1,5 +1,5 @@
 %option noyywrap nodefault 
-%option case-insensitive lineno
+%option case-insensitive yylineno
 
 %x COMMENT
 %x SPRITE
@@ -28,8 +28,8 @@
 <MAP>[^ \t\n:,\}]+ { printf(" TXT(%s) ", yytext ); }
 <MAP>[ \t\n] /* irrelevant */
 
-"DURATION" { printf("\n_Duration_"); }
-"SEED" { printf("\n_Seed_"); }
+"DURATION" { yylval.string = strdup(yytext); return OBJECT; }
+"SEED" { yylval.string = strdup(yytext); return OBJECT; }
 "PLAYER-ATTRIB" { printf("\n_Player-attrib_"); }
 "PLAYER-SPRITE" { printf("\n_Player-sprite_"); }
 "BADGUY" { printf("\n_Badguy_"); }
@@ -39,11 +39,11 @@
 "[["[ \t]*\n { printf("\n\[\[\n"); BEGIN SPRITE; }
 [ \t]\{[ \t\n]* { printf(" {\n"); BEGIN MAP; }
 ^"{"[ \t]*$ { printf(" {\n"); BEGIN MAP; }
-[0-9]+ { printf(" INT(%s) ", yytext ); }
+[0-9]+ { printf(" INT(%s) ", yytext ); yylval.num = atoi(yytext); return INT; }
 ^[ \t]*"#" { printf("# "); BEGIN COMMENT; }
 \"[^ \t\n"]+\" { printf(" TXT(%s) ", yytext ); }
 '[^ \t\n']+' { printf(" TXT(%s) ", yytext ); }
-[ \t][^ \t\n\{\"']+/[ \t] { printf(" TXT(%s) ", &yytext[1] ); }
+[ \t][^ \t\n\{\"']+/[ \t] { yylval.string = &yytext[1]; return TXT; }
 [ \t\n]   /* irrelevant */
 . { printf( " ~(%s) " , yytext ); /* trash */ } 
 %%

@@ -27,11 +27,11 @@ void yyerror(char *s);
 
 %%
 level : /* zero */
-	  | level OBJECT value
+	  | level OBJECT value 
       | level OBJECT TXT value
 ;
-value : TXT
-	  | INT
+value : TXT { printf("txt[%s]",$1); }
+	  | INT { printf("int(%d)",$1); }
 	  | '{' map '}'
 	  | SPRITE_BEGIN sprite SPRITE_END 
 ; 
