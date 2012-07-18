@@ -1,5 +1,11 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
+
+extern int yylineno;
+int yylex();
+void yyerror(char *s);
+
 %}
 
 %union {
@@ -41,13 +47,15 @@ sprite : SPRITE_STRING          /* first one */
        | sprite SPRITE_STRING   /* append */
 ;
 %%
+void yyerror( char * s) {
+	fprintf( stderr, "At lineno %d, ", yylineno );
+	fprintf( stderr, "shit happens, msg: ' %s '\n", s );
+	exit(-1);
+}
+
 int main(){
     yyparse();
     return 0;
 }
 
-void yyerror(const char * s, ...) {
-	fprintf( stderr, "At lineno %d, ", yylineno );
-	fprintf( stderr, " shit happens: %s \n", s );
-	exit(-1);
-}
+

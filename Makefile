@@ -5,6 +5,8 @@ APU_CONFIG=$(shell which apu-1-config)
 #CFLAGS = $(shell ${APR_CONFIG} --cflags --cppflags --includes) \
 #		 $(shell ${APU_CONFIG} --includes) -Wall -g
 
+CFLAGS = -Wall -g
+
 #LDFLAGS=$(shell ${APR_CONFIG} --ldflags) \
 #		$(shell ${APU_CONFIG} --ldflags)
 
