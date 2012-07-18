@@ -1,13 +1,19 @@
 %{
-
+#include <stdio.h>
 %}
-%token OBJECT
-%token TXT
-%token INT
+
+%union {
+	int num;
+	char * string;
+}
+
+%token <string> OBJECT
+%token <string> TXT
+%token <num> INT
 %token SPRITE_BEGIN
 %token SPRITE_END
-%token SPRITE_STRING
-%token KEY
+%token <string> SPRITE_STRING
+%token <string> KEY
 /* 
     also used is '{' '}' ',' ':' 
 */
@@ -26,7 +32,7 @@ value : TXT
 map : keyval     /* first one */
     | map ',' keyval /* append */
 ;
-keyval : KEY ':' TXTmake clea
+keyval : KEY ':' TXT
        | KEY ':' INT
        | KEY TXT
        | KEY INT
@@ -38,4 +44,9 @@ sprite : SPRITE_STRING          /* first one */
 int main(){
     yyparse();
     return 0;
+}
+
+void yyerror(const char * s, ...) {
+	fprintf( stderr, "wow shit happens: %s", s );
+	exit(-1);
 }

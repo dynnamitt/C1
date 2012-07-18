@@ -5,16 +5,17 @@
 %x SPRITE
 %x MAP
 %{
-
+#include <stdlib.h>
+#include "parser.tab.h"
 %}
 
 %%
 <COMMENT>.   /* ignore */
 <COMMENT>\n   { BEGIN INITIAL; }
-
-<SPRITE>^"]]" { printf("\]\]\n"); BEGIN INITIAL; }
-<SPRITE>[^\n]* { printf( "\t%s" , yytext ); }
-<SPRITE>\n { printf("\n"); /* NoToken */ }
+	
+<SPRITE>^"]]" { BEGIN INITIAL; return SPRITE_END; }
+<SPRITE>[^\n]+ { yylval.string = strdup(yytext); return SPRITE_STRING; }
+<SPRITE>\n /* jump along */
 
 <MAP>"}" { printf("\n}\n"); BEGIN INITIAL; }
 <MAP>"QUANTUM" { printf(" @Quantum "); }
@@ -42,13 +43,8 @@
 ^[ \t]*"#" { printf("# "); BEGIN COMMENT; }
 \"[^ \t\n"]+\" { printf(" TXT(%s) ", yytext ); }
 '[^ \t\n']+' { printf(" TXT(%s) ", yytext ); }
-[ \t][^ \t\n\{\"']+/[ \t] { printf(" TXT(%s) ", yytext ); }
+[ \t][^ \t\n\{\"']+/[ \t] { printf(" TXT(%s) ", &yytext[1] ); }
 [ \t\n]   /* irrelevant */
 . { printf( " ~(%s) " , yytext ); /* trash */ } 
 %%
 
-int main()
-{
-	yylex();
-	return 0;
-}
