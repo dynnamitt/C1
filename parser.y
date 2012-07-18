@@ -47,6 +47,7 @@ int main(){
 }
 
 void yyerror(const char * s, ...) {
-	fprintf( stderr, "wow shit happens: %s", s );
+	fprintf( stderr, "At lineno %d, ", yylineno );
+	fprintf( stderr, " shit happens: %s \n", s );
 	exit(-1);
 }

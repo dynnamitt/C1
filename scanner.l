@@ -1,5 +1,5 @@
 %option noyywrap nodefault 
-%option case-insensitive 
+%option case-insensitive yylineno
 
 %x COMMENT
 %x SPRITE
