@@ -6,8 +6,8 @@
 %token INT
 %token SPRITE_BEGIN
 %token SPRITE_END
-%token KEY
 %token SPRITE_STRING
+%token KEY
 /* 
     also used is '{' '}' ',' ':' 
 */
@@ -21,12 +21,12 @@ level : /* zero */
 value : TXT
 	  | INT
 	  | '{' map '}'
-	  | SPRITE_BEGIN sprite SPRITE_END
+	  | SPRITE_BEGIN sprite SPRITE_END 
 ; 
 map : keyval     /* first one */
     | map ',' keyval /* append */
 ;
-keyval : KEY ':' TXT
+keyval : KEY ':' TXTmake clea
        | KEY ':' INT
        | KEY TXT
        | KEY INT

@@ -33,8 +33,8 @@ player-sprite dead [[
 # 'time' is the given seconds of bonus given. Aka "afterglow"
 # 'speed' is how many millisec obj uses from top to bottom
 # 'color' is color.
-silver $$ { quantum : 2 , time:5 , speed: 200 , color:bold }
-Silver ŮŮ { quantum 2 , time:10 , speed: 50 , color:bold | blinking }
+silver	$$	{ quantum : 2 , time:5 , speed: 200 , color:bold }
+Silver	ŮŮ { quantum 2 , time:10 , speed: 50 , color:bold | blinking }
 Silver :: { quantum 2 , time 10 , speed  50 , color bold|blinking|green }
 
 # Badguys
@@ -56,7 +56,7 @@ frame ┃ { color: orange }
 
 # BottomLine(s)
 # can have attrib = color
-bottomline ▀ { color: red }
+bottomline	▀	{	color: red }
 BottomLine '"' { color: brown }
 
 
