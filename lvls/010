@@ -34,7 +34,7 @@ player-sprite dead [[
 # 'speed' is how many millisec obj uses from top to bottom
 # 'color' is color.
 silver	$$	{ quantum : 2 , time:5 , speed: 200 , color:bold }
-Silver	ŮŮ { quantum 2 , time:10 , speed: 50 , color:bold | blinking }
+Silver	ŮŮ { quantum 2 , time:10 , speed: 50 , color:bold  }
 Silver :: { quantum 2 , time 10 , speed  50 , color bold|blinking|green }
 
 # Badguys
@@ -61,4 +61,3 @@ BottomLine '"' { color: brown }
 
 
 
-"ba"d'line'

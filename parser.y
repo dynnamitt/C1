@@ -2,16 +2,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef union {
+	int num;
+	char * string;
+} Value_t;
+
+typedef struct {
+	char * key;
+	Value_t * val;
+} Keyval_t;
+
+
 extern int yylineno;
 int yylex();
 void yyerror(char *s);
 
 %}
-
-%union {
-	int num;
-	char * string;
-}
+%YYTYPE Value_t;
 
 %token <string> OBJECT
 %token <string> TXT
@@ -26,11 +33,11 @@ void yyerror(char *s);
 
 
 %%
-level : /* zero */
-	  | level OBJECT value 
-      | level OBJECT TXT value
+level : /* zeo */
+	  | level OBJECT value { printf("%s found.\n",$2); } 
+      | level OBJECT TXT value { printf("%s found.\n",$2); }
 ;
-value : TXT { printf("txt[%s]",$1); }
+value : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
 	  | '{' map '}'
 	  | SPRITE_BEGIN sprite SPRITE_END 
@@ -49,7 +56,7 @@ sprite : SPRITE_STRING          /* first one */
 %%
 void yyerror( char * s) {
 	fprintf( stderr, "At lineno %d, ", yylineno );
-	fprintf( stderr, "shit happens, msg: ' %s '\n", s );
+	fprintf( stderr, "shit happens. Msg: ' %s '\n", s );
 	exit(-1);
 }
 
