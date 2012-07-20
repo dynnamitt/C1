@@ -13,6 +13,18 @@ typedef enum {
     ETC   
 } Color;
 
+typedef enum {
+  TITLE,
+  DURATION,
+  SEED,
+  PLAYER_ATTRIB,
+  PLAYER_SPRITE,
+  BADGUY,
+  SILVER,
+  FRAME,
+  BOTTOMLINE
+} Config_object;
+
 /*
     PLAYER
 */
@@ -58,7 +70,7 @@ typedef struct { int len; Silver_t elems[]; } Silver_list;
     LEVEL
 */
 typedef struct {
-  int time; /* lasting seconds */
+  int duration; /* lasting seconds */
   int seed; /* predictable random departure */
   Player_t player; 
   Badguy_list badguy_list;

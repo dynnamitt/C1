@@ -1,24 +1,27 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "level.h"
 
-typedef union {
-	int num;
-	char * string;
-} Value_t;
 
-typedef struct {
+
+struct KEYVAL {
 	char * key;
-	Value_t * val;
-} Keyval_t;
+	int val;
+};
 
 
 extern int yylineno;
 int yylex();
 void yyerror(char *s);
-
+struct KEYVAL * newkeyval(const char *k, int v);
 %}
-%YYTYPE Value_t;
+
+%union {
+	int num;
+	char * string;
+	struct KEYVAL * keyval;
+}
 
 %token <string> OBJECT
 %token <string> TXT
@@ -27,6 +30,8 @@ void yyerror(char *s);
 %token SPRITE_END
 %token <string> SPRITE_STRING
 %token <string> KEY
+
+%type <keyval> keyval
 /* 
     also used is '{' '}' ',' ':' 
 */
@@ -34,31 +39,41 @@ void yyerror(char *s);
 
 %%
 level : /* zeo */
-	  | level OBJECT value { printf("%s found.\n",$2); } 
-      | level OBJECT TXT value { printf("%s found.\n",$2); }
+	  | level OBJECT value { printf("%d found.\n",$2); } 
+      | level OBJECT TXT value { printf("%d found.\n",$2); }
 ;
 value : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
 	  | '{' map '}'
 	  | SPRITE_BEGIN sprite SPRITE_END 
 ; 
-map : keyval     /* first one */
+map : keyval     { printf("key=%s | val=%d > ", $1->key , $1->val ); }
     | map ',' keyval /* append */
 ;
-keyval : KEY ':' TXT
-       | KEY ':' INT
-       | KEY TXT
-       | KEY INT
+keyval : KEY ':' TXT { $$ = newkeyval($1, 1111); }
+       | KEY ':' INT { $$ = newkeyval($1, $3); }
+       | KEY TXT { $$ = newkeyval($1, 1112); }
+       | KEY INT { $$ = newkeyval($1, $2); }
+
 ;
 sprite : SPRITE_STRING          /* first one */
        | sprite SPRITE_STRING   /* append */
 ;
 %%
+
+struct KEYVAL * newkeyval(const char *k, int v){
+    struct KEYVAL * kv = malloc( sizeof(struct KEYVAL) );
+    kv->key = k;
+    kv->val = v;
+    return kv;
+}
+
 void yyerror( char * s) {
 	fprintf( stderr, "At lineno %d, ", yylineno );
 	fprintf( stderr, "shit happens. Msg: ' %s '\n", s );
 	exit(-1);
 }
+
 
 int main(){
     yyparse();

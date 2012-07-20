@@ -25,7 +25,7 @@ run: $(BIN2)
 
 $(PARSER_BIN): scanner.c
 
-scanner.c: scanner.l 
+scanner.c: scanner.l parser.y 
 	bison -d $(PARSER_BIN).y
 	flex -o$@ $(subst .c,.l,$@) 
 
