@@ -6,7 +6,7 @@
 
 
 struct KEYVAL {
-	char * key;
+	Map_key key;
 	int val;
 };
 
@@ -14,7 +14,7 @@ struct KEYVAL {
 extern int yylineno;
 int yylex();
 void yyerror(char *s);
-struct KEYVAL * newkeyval(const char *k, int v);
+struct KEYVAL * newkeyval(Map_key k, int v);
 %}
 
 %union {
@@ -23,13 +23,13 @@ struct KEYVAL * newkeyval(const char *k, int v);
 	struct KEYVAL * keyval;
 }
 
-%token <string> OBJECT
+%token <num> OBJECT
 %token <string> TXT
 %token <num> INT
 %token SPRITE_BEGIN
 %token SPRITE_END
 %token <string> SPRITE_STRING
-%token <string> KEY
+%token <num> KEY
 
 %type <keyval> keyval
 /* 
@@ -47,7 +47,7 @@ value : TXT { printf("txt(%s)",$1); }
 	  | '{' map '}'
 	  | SPRITE_BEGIN sprite SPRITE_END 
 ; 
-map : keyval     { printf("key=%s | val=%d > ", $1->key , $1->val ); }
+map : keyval     { printf("key=%d | val=%d > ", $1->key , $1->val ); }
     | map ',' keyval /* append */
 ;
 keyval : KEY ':' TXT { $$ = newkeyval($1, 1111); }
@@ -56,12 +56,12 @@ keyval : KEY ':' TXT { $$ = newkeyval($1, 1111); }
        | KEY INT { $$ = newkeyval($1, $2); }
 
 ;
-sprite : SPRITE_STRING          /* first one */
-       | sprite SPRITE_STRING   /* append */
+sprite : SPRITE_STRING          { printf("%s\n", $1); }
+       | sprite SPRITE_STRING   { printf("%s\n", $2); }
 ;
 %%
 
-struct KEYVAL * newkeyval(const char *k, int v){
+struct KEYVAL * newkeyval(Map_key k, int v){
     struct KEYVAL * kv = malloc( sizeof(struct KEYVAL) );
     kv->key = k;
     kv->val = v;
@@ -70,7 +70,7 @@ struct KEYVAL * newkeyval(const char *k, int v){
 
 void yyerror( char * s) {
 	fprintf( stderr, "At lineno %d, ", yylineno );
-	fprintf( stderr, "shit happens. Msg: ' %s '\n", s );
+	fprintf( stderr, "an ERROR, msg: '%s'\n", s );
 	exit(-1);
 }
 

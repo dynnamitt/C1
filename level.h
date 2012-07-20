@@ -1,7 +1,7 @@
 #define SPRITE_MAX_ROWS 5
 
 /*
-   Color
+   Color .. TODO: match against ncurses..
 */
 typedef enum {
     BLACK,
@@ -14,17 +14,23 @@ typedef enum {
 } Color;
 
 typedef enum {
-  TITLE,
-  DURATION,
-  SEED,
-  PLAYER_ATTRIB,
-  PLAYER_SPRITE,
-  BADGUY,
-  SILVER,
-  FRAME,
-  BOTTOMLINE
+  CO_TITLE,
+  CO_DURATION,
+  CO_SEED,
+  CO_PLAYER_ATTRIB,
+  CO_PLAYER_SPRITE,
+  CO_BADGUY,
+  CO_SILVER,
+  CO_FRAME,
+  CO_BOTTOMLINE
 } Config_object;
 
+typedef enum {
+  K_QUANTUM,
+  K_TIME,
+  K_COLOR,
+  K_SPEED
+} Map_key;
 /*
     PLAYER
 */

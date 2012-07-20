@@ -19,25 +19,25 @@
 <SPRITE>\n /* jump along */
 
 <MAP>"}" { BEGIN INITIAL; return '}'; }
-<MAP>"QUANTUM" { yylval.string=strdup(yytext); return KEY; }
-<MAP>"TIME" { yylval.string=strdup(yytext); return KEY; }
-<MAP>"SPEED" { yylval.string=strdup(yytext); return KEY; }
-<MAP>"COLOR" { yylval.string=strdup(yytext); return KEY; }
+<MAP>"QUANTUM" { yylval.num = K_QUANTUM; return KEY; }
+<MAP>"TIME" { yylval.num = K_TIME; return KEY; }
+<MAP>"SPEED" { yylval.num = K_SPEED; return KEY; }
+<MAP>"COLOR" { yylval.num = K_COLOR; return KEY; }
 <MAP>":" { return ':'; }
 <MAP>"," { return ','; }
 <MAP>[0-9]+ { yylval.num = atoi(yytext); return INT; }
-<MAP>[^ \t\n:,\}]+ { yylval.string=strdup(yytext); return TXT; }
+<MAP>[^ \t\n:,\}]+ { yylval.string = strdup(yytext); return TXT; }
 <MAP>[ \t\n] /* irrelevant */
 
-"TITLE" { yylval.num = TITLE; return OBJECT; }
-"DURATION" { yylval.num = DURATION; return OBJECT; }
-"SEED" { yylval.num = SEED; return OBJECT; }
-"PLAYER-ATTRIB" { yylval.num = PLAYER_ATTRIB; return OBJECT; }
-"PLAYER-SPRITE" { yylval.num = PLAYER_SPRITE; return OBJECT; }
-"BADGUY" { yylval.num = BADGUY; return OBJECT; }
-"SILVER" { yylval.num = SILVER; return OBJECT;  }
-"FRAME" { yylval.num = FRAME; return OBJECT; } 
-"BOTTOMLINE" { yylval.num = BOTTOMLINE; return OBJECT; }
+"TITLE" { yylval.num = CO_TITLE; return OBJECT; }
+"DURATION" { yylval.num = CO_DURATION; return OBJECT; }
+"SEED" { yylval.num = CO_SEED; return OBJECT; }
+"PLAYER-ATTRIB" { yylval.num = CO_PLAYER_ATTRIB; return OBJECT; }
+"PLAYER-SPRITE" { yylval.num = CO_PLAYER_SPRITE; return OBJECT; }
+"BADGUY" { yylval.num = CO_BADGUY; return OBJECT; }
+"SILVER" { yylval.num = CO_SILVER; return OBJECT;  }
+"FRAME" { yylval.num = CO_FRAME; return OBJECT; } 
+"BOTTOMLINE" { yylval.num = CO_BOTTOMLINE; return OBJECT; }
 "[["[ \t]*\n { BEGIN SPRITE; return SPRITE_BEGIN; }
 [ \t]\{[ \t\n]* { BEGIN MAP; return '{'; }
 ^"{"[ \t]*$ { BEGIN MAP; return '{'; }
