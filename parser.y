@@ -3,15 +3,21 @@
 #include <stdlib.h>
 #include "level.h"
 
+/* how can we move these into .h */
+char * mapkey_names[] = { "quantum","time","color","speed" };
+char * obj_names[] = { "title","duration","seed","player_attrib",
+			"player_sprite","badguy","silver","frame",
+			"bottomline" };
+
 struct KEYVAL {
-	Map_key key;
+	int key;
 	int val;
 };
 
 extern int yylineno;
 int yylex();
 void yyerror(char *s);
-struct KEYVAL * newkeyval(Map_key k, int v);
+struct KEYVAL * newkeyval(int k, int v);
 %}
 
 %union {
@@ -36,16 +42,16 @@ struct KEYVAL * newkeyval(Map_key k, int v);
 
 %%
 level : /* zeo */
-	  | level OBJECT value { printf(" : %d found.\n",$2); } 
-      | level OBJECT TXT value { printf(" : %d found.\n",$2); }
+	  | level OBJECT value { printf("——>  <%s> \n", obj_names[$2]); } 
+      | level OBJECT TXT value { printf("——> <%s> \n", obj_names[$2]); }
 ;
 value : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
 	  | '{' map '}'
-	  | SPRITE_BEGIN sprite SPRITE_END 
+	  | SPRITE_BEGIN sprite SPRITE_END { /* calc max len? */ } 
 ; 
-map : keyval     { printf("(key=%d val=%d) ", $1->key , $1->val ); }
-    | map ',' keyval { printf("(key=%d val=%d) ", $3->key , $3->val ); /* append */ }
+map : keyval     { printf("(key=%s val=%d) ", mapkey_names[$1->key] , $1->val ); }
+    | map ',' keyval { printf("(key=%s val=%d) ", mapkey_names[$3->key] , $3->val ); /* append */ }
 ;
 keyval : KEY ':' TXT { $$ = newkeyval($1, 1111); }
        | KEY ':' INT { $$ = newkeyval($1, $3); }
@@ -58,7 +64,7 @@ sprite : SPRITE_STRING          { printf("%s\n", $1); }
 ;
 %%
 
-struct KEYVAL * newkeyval(Map_key k, int v){
+struct KEYVAL * newkeyval(int k, int v){
     struct KEYVAL * kv = malloc( sizeof(struct KEYVAL) );
     kv->key = k;
     kv->val = v;

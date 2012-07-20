@@ -1,6 +1,28 @@
+#ifndef _LEVEL_H
+#define _LEVEL_H 1
+
 #define SPRITE_MAX_ROWS 5
 
+/* ConfigObjects */
+#define CO_TITLE 0
+#define CO_DURATION 1
+#define CO_SEED 2
+#define CO_PLAYER_ATTRIB 3
+#define CO_PLAYER_SPRITE 4
+#define CO_BADGUY 5
+#define CO_SILVER 6
+#define CO_FRAME 7
+#define CO_BOTTOMLINE 8
+
+
+/* MapKeys */
+#define K_QUANTUM 0
+#define K_TIME 1
+#define K_COLOR 2
+#define K_SPEED 3
+
 /*
+
    Color .. TODO: match against ncurses..
 */
 typedef enum {
@@ -13,24 +35,6 @@ typedef enum {
     ETC   
 } Color;
 
-typedef enum {
-  CO_TITLE,
-  CO_DURATION,
-  CO_SEED,
-  CO_PLAYER_ATTRIB,
-  CO_PLAYER_SPRITE,
-  CO_BADGUY,
-  CO_SILVER,
-  CO_FRAME,
-  CO_BOTTOMLINE
-} Config_object;
-
-typedef enum {
-  K_QUANTUM,
-  K_TIME,
-  K_COLOR,
-  K_SPEED
-} Map_key;
 /*
     PLAYER
 */
@@ -84,4 +88,4 @@ typedef struct {
 } Level_t;
 
 
-
+#endif
