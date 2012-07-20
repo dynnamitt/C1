@@ -3,13 +3,10 @@
 #include <stdlib.h>
 #include "level.h"
 
-
-
 struct KEYVAL {
 	Map_key key;
 	int val;
 };
-
 
 extern int yylineno;
 int yylex();
@@ -39,16 +36,16 @@ struct KEYVAL * newkeyval(Map_key k, int v);
 
 %%
 level : /* zeo */
-	  | level OBJECT value { printf("%d found.\n",$2); } 
-      | level OBJECT TXT value { printf("%d found.\n",$2); }
+	  | level OBJECT value { printf(" : %d found.\n",$2); } 
+      | level OBJECT TXT value { printf(" : %d found.\n",$2); }
 ;
 value : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
 	  | '{' map '}'
 	  | SPRITE_BEGIN sprite SPRITE_END 
 ; 
-map : keyval     { printf("key=%d | val=%d > ", $1->key , $1->val ); }
-    | map ',' keyval /* append */
+map : keyval     { printf("(key=%d val=%d) ", $1->key , $1->val ); }
+    | map ',' keyval { printf("(key=%d val=%d) ", $3->key , $3->val ); /* append */ }
 ;
 keyval : KEY ':' TXT { $$ = newkeyval($1, 1111); }
        | KEY ':' INT { $$ = newkeyval($1, $3); }
@@ -57,7 +54,7 @@ keyval : KEY ':' TXT { $$ = newkeyval($1, 1111); }
 
 ;
 sprite : SPRITE_STRING          { printf("%s\n", $1); }
-       | sprite SPRITE_STRING   { printf("%s\n", $2); }
+       | sprite SPRITE_STRING   { printf("%s\n", $2); /* append */ }
 ;
 %%
 
@@ -73,7 +70,6 @@ void yyerror( char * s) {
 	fprintf( stderr, "an ERROR, msg: '%s'\n", s );
 	exit(-1);
 }
-
 
 int main(){
     yyparse();
