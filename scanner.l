@@ -8,8 +8,6 @@
 #include <stdlib.h>
 #include "parser.tab.h"
 #include "level.h"
-#include <ctype.h>
-#include "utils.h"
 
 %}
 
@@ -29,7 +27,7 @@
 <MAP>":" { return ':'; }
 <MAP>"," { return ','; }
 <MAP>[0-9]+ { yylval.num = atoi(yytext); return INT; }
-<MAP>[^ \t\n:,\}]+ { each_char(yylval.string = strdup(yytext),toupper); return TXT; }
+<MAP>[^ \t\n:,\}]+ { yylval.string = strdup(yytext); return TXT; }
 <MAP>[ \t\n] /* irrelevant */
 
 "TITLE" { yylval.num = O_TITLE; return OBJECT; }

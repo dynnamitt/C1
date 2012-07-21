@@ -52,9 +52,9 @@ value : TXT { printf("txt(%s)",$1); }
 map : keyval     { printf("(key=%s val=%d) ", map_key_names[$1->key] , $1->val ); }
     | map ',' keyval { printf("(key=%s val=%d) ", map_key_names[$3->key] , $3->val ); /* append */ }
 ;
-keyval : KEY ':' TXT { $$ = newkeyval($1, 1111); }
+keyval : KEY ':' TXT { $$ = newkeyval($1, color_lookup($3) ); }
        | KEY ':' INT { $$ = newkeyval($1, $3); }
-       | KEY TXT { $$ = newkeyval($1, 1112); }
+       | KEY TXT { $$ = newkeyval($1, color_lookup($2) ); }
        | KEY INT { $$ = newkeyval($1, $2); }
 
 ;
