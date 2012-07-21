@@ -1,5 +1,5 @@
 #ifndef _LEVEL_H
-#define _LEVEL_H 
+#define _LEVEL_H
 
 #define SPRITE_MAX_ROWS 5
 
@@ -21,28 +21,24 @@ typedef enum {
 /* MapKeys */
 extern char * map_key_names[];
 typedef enum {
-  K_QUANTUM,
-  K_TIME,
-  K_COLOR,
-  K_SPEED,
+    K_QUANTUM,
+    K_TIME,
+    K_COLOR,
+    K_SPEED,
 } Key;
 
-/*
-
-   Color ...
-*/
-
+/* Color ... */
 extern char * colors[];
 typedef enum {
-  COLOR_NONE = -1,
-  BLACK = 0,
-  RED,
-  GREEN,
-  YELLOW,
-  BLUE,
-  MAGENTA,
-  CYAN,
-  WHITE,
+    COLOR_NONE = -1,
+    BLACK = 0,
+    RED,
+    GREEN,
+    YELLOW,
+    BLUE,
+    MAGENTA,
+    CYAN,
+    WHITE,
 } Color;
 /* Func to find the ENUM int from a string */
 Color color_lookup(const char * string);
@@ -62,9 +58,9 @@ typedef struct {
     BADGUY
 */
 typedef struct {
-  char * sprite;
-  int speed;
-  Color color;
+    char * sprite;
+    int speed;
+    Color color;
 } Badguy_t;
 
 /* BADGUY ARR */
@@ -72,19 +68,19 @@ typedef struct { int len; Badguy_t elems[]; } Badguy_list;
 
 /* SILVER */
 typedef struct {
-  char * sprite;
-  int quantum;
-  int time;
-  int speed;
-  Color color;
+    char * sprite;
+    int quantum;
+    int time;
+    int speed;
+    Color color;
 } Silver_t;
 
 /* SILVER ARR */
 typedef struct { int len; Silver_t elems[]; } Silver_list;
 
 /*
-   SILVER, 
-   FRAME, 
+   SILVER,
+   FRAME,
    BOTTOMLINE
 */
 
@@ -92,11 +88,11 @@ typedef struct { int len; Silver_t elems[]; } Silver_list;
     LEVEL
 */
 typedef struct {
-  int duration; /* lasting seconds */
-  int seed; /* predictable random departure */
-  Player_t player; 
-  Badguy_list badguy_list;
-  Silver_list silver_list;
+    int duration; /* lasting seconds */
+    int seed; /* predictable random departure */
+    Player_t player;
+    Badguy_list badguy_list;
+    Silver_list silver_list;
 } Level_t;
 
 

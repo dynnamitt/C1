@@ -59,8 +59,4 @@ frame ┃ { color: orange }
 
 # BottomLine(s)
 # can have attrib = color
-bottomline	▀	{	color: red }
-BottomLine '"' { color: brown }
-
-
-
+bottomline	'˚"'	{	color: red }
