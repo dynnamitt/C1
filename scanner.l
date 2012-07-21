@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "parser.tab.h"
 #include "level.h"
+#include "utils.h"
 
 %}
 
@@ -44,8 +45,8 @@
 ^"{"[ \t]*$ { BEGIN MAP; return '{'; }
 [0-9]+ { yylval.num = atoi(yytext); return INT; }
 ^[ \t]*"#" { BEGIN COMMENT; }
-\"[^"]+\"/[ \t\n] { yylval.string=strdup(yytext); return TXT; }
-'[^']+'/[ \t\n] { yylval.string=strdup(yytext); return TXT; }
+\"[^"]+\"/[ \t\n] { yylval.string = strndup(&yytext[1], strlen(yytext)-2 ); return TXT; }
+'[^']+'/[ \t\n] { yylval.string = strndup(&yytext[1], strlen(yytext)-2 ); return TXT; }
 [ \t][^ \t\n\{\"']+/[ \t] { yylval.string = strdup(&yytext[1]); return TXT; }
 [ \t\n]   /* irrelevant */
 . { fprintf( stderr, " ~(%s) " , yytext ); /* trash */ } 

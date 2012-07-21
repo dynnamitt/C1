@@ -26,8 +26,9 @@
 int string_toupper(char * string)
 {
     const char * p = string;
-    while(*string++) {
+    while(*string) {
         *string = toupper(*string);
+	string++;
     }
     return string - p;
 }
@@ -38,11 +39,10 @@ int string_toupper(char * string)
 int each_char(char * string, int (*charfunc)(int) )
 {
     const char * p = string;
-    while(*string++) {
+
+    while(*string) {
         *string = charfunc(*string);
+	string++;
     }
     return string - p;
 }
-
-
-

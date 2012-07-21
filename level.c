@@ -17,15 +17,16 @@
  */
 #include <stdlib.h>
 #include <ctype.h>
+/*#include <stdio.h>*/
 #include <string.h>
 #include "level.h"
 #include "utils.h"
 
-char * map_key_names[] = { "quantum", "time", "color", "speed", NULL };
+char * map_key_names[] = { "Quantum", "Time", "Color", "Speed", NULL };
 
-char * obj_names[] = { "title", "duration", "seed", "player_attrib",
-                       "player_sprite", "badguy", "silver", "frame",
-                       "bottomline", NULL
+char * obj_names[] = { "Title", "Duration", "Seed", "PlayerAttrib",
+                       "PlayerSprite", "Badguy", "Silver", "Frame",
+                       "Bottomline", NULL
                      };
 
 char * colors[] = { "BLACK", "RED", "GREEN", "YELLOW",
@@ -33,21 +34,22 @@ char * colors[] = { "BLACK", "RED", "GREEN", "YELLOW",
                     NULL
                   };
 
-Color color_lookup(const char * string)
+Color color_lookup(const char * k)
 {
-    Color color = -1;
+    Color color = COLOR_NONE;
     char ** p;
-    char * ucase_str = strdup(string);
-    each_char( ucase_str, toupper );
+    char * ucase_k = strdup(k);
+    each_char(ucase_k, toupper);
 
-    for(p = colors; *p != NULL; p++) {
-        printf( "has %s == %s \n", *p, ucase_str );
-        if(strcmp(*p , ucase_str) == 0) {
-	    color = (Color)(*p - string);
-	    break;
+    int idx = 0;
+    for(p = colors; *p != NULL; p++, idx++ ) {
+        /*printf("has %s == %s \n", *p, ucase_k);*/
+        if(strcmp(*p , ucase_k) == 0) {
+            color = (Color)idx;
+            break;
         }
     }
 
-    free(ucase_str);
+    free(ucase_k);
     return color;
 }

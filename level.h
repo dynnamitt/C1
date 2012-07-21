@@ -29,12 +29,13 @@ typedef enum {
 
 /*
 
-   Color .. TODO: match against ncurses..
+   Color ...
 */
 
 extern char * colors[];
 typedef enum {
-  BLACK,
+  COLOR_NONE = -1,
+  BLACK = 0,
   RED,
   GREEN,
   YELLOW,
@@ -43,16 +44,8 @@ typedef enum {
   CYAN,
   WHITE,
 } Color;
-/* 
-#define COLOR_BLACK	0
-#define COLOR_RED	1
-#define COLOR_GREEN	2
-#define COLOR_YELLOW	3
-#define COLOR_BLUE	4
-#define COLOR_MAGENTA	5
-#define COLOR_CYAN	6
-#define COLOR_WHITE	7
-*/
+/* Func to find the ENUM int from a string */
+Color color_lookup(const char * string);
 
 /*
     PLAYER

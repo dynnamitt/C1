@@ -41,8 +41,8 @@ struct KEYVAL * newkeyval(Key k, int v);
 
 %%
 level : /* zelo */
-	  | level OBJECT value { printf("——>  <%s> \n", obj_names[$2]); } 
-      | level OBJECT TXT value { printf("——> <%s> \n", obj_names[$2]); }
+	  | level OBJECT value { printf("——>  <%s> \n" ,obj_names[$2]); } 
+      | level OBJECT TXT value { printf("(%s)——> <%s> \n", $3, obj_names[$2]); }
 ;
 value : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
@@ -80,5 +80,3 @@ int main(){
     yyparse();
     return 0;
 }
-
-

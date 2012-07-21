@@ -1,5 +1,5 @@
 
-title "A new beginning for prince ASCii"
+title "A new beginning for prince ASCii (so hip to be square)"
 
 # For how many seconds must 
 # we survive "the shower"
@@ -26,7 +26,7 @@ player-sprite fresh
 
 player-sprite dead [[
  ░░░░░
-|░x░x░|
+[░x░x░]
  ░░0░░
 ]]
 
