@@ -1,39 +1,58 @@
 #ifndef _LEVEL_H
-#define _LEVEL_H 1
+#define _LEVEL_H 
 
 #define SPRITE_MAX_ROWS 5
 
 /* ConfigObjects */
-#define CO_TITLE 0
-#define CO_DURATION 1
-#define CO_SEED 2
-#define CO_PLAYER_ATTRIB 3
-#define CO_PLAYER_SPRITE 4
-#define CO_BADGUY 5
-#define CO_SILVER 6
-#define CO_FRAME 7
-#define CO_BOTTOMLINE 8
+extern char * obj_names[];
+typedef enum {
+    O_TITLE,
+    O_DURATION,
+    O_SEED,
+    O_PLAYER_ATTRIB,
+    O_PLAYER_SPRITE,
+    O_BADGUY,
+    O_SILVER,
+    O_FRAME,
+    O_BOTTOMLINE,
+} Object;
 
 
 /* MapKeys */
-#define K_QUANTUM 0
-#define K_TIME 1
-#define K_COLOR 2
-#define K_SPEED 3
+extern char * map_key_names[];
+typedef enum {
+  K_QUANTUM,
+  K_TIME,
+  K_COLOR,
+  K_SPEED,
+} Key;
 
 /*
 
    Color .. TODO: match against ncurses..
 */
+
+extern char * colors[];
 typedef enum {
-    BLACK,
-    WHITE,
-    YELLOW,
-    BLUE,
-    GREEN,
-    RED,
-    ETC   
+  BLACK,
+  RED,
+  GREEN,
+  YELLOW,
+  BLUE,
+  MAGENTA,
+  CYAN,
+  WHITE,
 } Color;
+/* 
+#define COLOR_BLACK	0
+#define COLOR_RED	1
+#define COLOR_GREEN	2
+#define COLOR_YELLOW	3
+#define COLOR_BLUE	4
+#define COLOR_MAGENTA	5
+#define COLOR_CYAN	6
+#define COLOR_WHITE	7
+*/
 
 /*
     PLAYER

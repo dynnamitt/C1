@@ -19,15 +19,15 @@ player-attrib dead
 
 player-sprite fresh 
 [[  
-▓▓▓▓▓
-▓o.o▓
-▓▓O▓▓
+ ▓▓▓▓▓
+(▓o.o▓)
+ ▓▓O▓▓
 ]]
 
 player-sprite dead [[
-░░░░░
-░x░x░
-░░0░░
+ ░░░░░
+|░x░x░|
+ ░░0░░
 ]]
 
 # Bonus objects.
