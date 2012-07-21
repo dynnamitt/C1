@@ -41,6 +41,7 @@ Color color_lookup(const char * string)
     each_char( ucase_str, toupper );
 
     for(p = colors; *p != NULL; p++) {
+        printf( "has %s == %s \n", *p, ucase_str );
         if(strcmp(*p , ucase_str) == 0) {
 	    color = (Color)(*p - string);
 	    break;
