@@ -18,11 +18,13 @@ typedef enum {
 } Object;
 
 
-/* MapKeys */
+/* Simple "Maps" */
 #define NMAPKEYS 4
-#define UNDEF -1
+#define VAL_UNDEF -1
 
 extern char * map_key_names[];
+
+typedef int * Map_t;
 typedef enum {
     K_QUANTUM,
     K_TIME,
@@ -30,9 +32,9 @@ typedef enum {
     K_SPEED,
 } Key;
 
-/*  Print a sample map 
+/*  Print a sample map
     (w all textual info from 'map_key_names' */
-void lvl_puts_map(int * m);
+void lvl_puts_map(Map_t m, int n_tab_pads);
 
 /* Color ... */
 extern char * colors[];

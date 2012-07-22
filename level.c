@@ -37,10 +37,11 @@ char * colors[] = { "BLACK", "RED", "GREEN", "YELLOW",
 Color color_lookup(const char * k)
 {
     Color color = COLOR_NONE;
-    char ** p;
+
     char * ucase_k = strdup(k);
     each_char(ucase_k, toupper);
 
+    char ** p;
     int idx = 0;
     for(p = colors; *p != NULL; p++, idx++ ) {
         /*printf("has %s == %s \n", *p, ucase_k);*/
@@ -55,7 +56,7 @@ Color color_lookup(const char * k)
 }
 
 
-void lvl_puts_map(int * m)
+void lvl_puts_map(int * m, int n_tab_pads)
 {
   
 }

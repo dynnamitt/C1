@@ -11,7 +11,6 @@
 
 struct Keyval { Key key; int val; };
 
-typedef int *Map_t;
 
 extern int yylineno;
 
@@ -21,7 +20,7 @@ void yyerror(char *s);
 
 /* custom */
 struct Keyval * newkeyval(Key k, int v);
-int * newmap(const struct Keyval * kv);
+Map_t newmap(const struct Keyval * kv);
 
 %}
 
@@ -54,7 +53,7 @@ level : /* zelo */
 ;
 value : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
-	  | '{' map '}' { lvl_puts_map( $2 ); }
+	  | '{' map '}' { lvl_puts_map( $2,0 ); }
 	  | SPRITE_BEGIN sprite SPRITE_END { /* calc max len? */ } 
 ; 
 map : keyval     { $$ = newmap($1); free($1); }
@@ -86,7 +85,7 @@ Map_t newmap(const struct Keyval * kv)
     assert(m && "Cannot create Map_t var.");	
     int i;
     for( i = 0; i < NMAPKEYS; i++ ) {
-	    m[i] = UNDEF;
+	    m[i] = VAL_UNDEF;
     }
     if( kv != NULL) {    
         m[kv->key] = kv->val;
