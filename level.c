@@ -62,14 +62,18 @@ void lvl_puts_map(Map_t m, int n_pads)
 {
     int i;
     char padding[MAX_SPACES] = "";
-    
+
     if(n_pads > 0) {
-        string_ins_char(padding,MAX_SPACES,' ',n_pads);
+        string_ins_char(padding, MAX_SPACES, ' ', n_pads);
     }
 
     for(i = 0; i < NMAPKEYS; i++) {
         if(m[i] != VAL_UNDEF) {
-            printf("%s%s:%d\n", padding, map_key_names[i], m[i]);
+            if(K_COLOR != i) {
+                printf("%s%7s : %d\n", padding, map_key_names[i], m[i]);
+            } else {
+                printf("%s%7s : %s\n", padding, map_key_names[i], colors[i]);
+            }
         }
     }
 }
