@@ -1,7 +1,8 @@
 #ifndef _LEVEL_H
 #define _LEVEL_H
 
-#define SPRITE_MAX_ROWS 5
+
+typedef char ** Sprite_t;
 
 /* ConfigObjects */
 extern char * obj_names[];
@@ -34,7 +35,7 @@ typedef enum {
 
 /*  Print a sample map
     (w all textual info from 'map_key_names' */
-void lvl_puts_map(Map_t m, int n_tab_pads);
+void lvl_puts_map(Map_t m, int n_pads);
 
 /* Color ... */
 extern char * colors[];
@@ -59,8 +60,8 @@ typedef struct {
     Color fresh;
     Color dead;
     int height; /* we seldom use MAX below */
-    char * sprite_fresh[SPRITE_MAX_ROWS];
-    char * sprite_dead[SPRITE_MAX_ROWS];
+    Sprite_t sprite_fresh;
+    Sprite_t sprite_dead;
 } Player_t;
 
 /*
@@ -73,7 +74,7 @@ typedef struct {
 } Badguy_t;
 
 /* BADGUY ARR */
-typedef struct { int len; Badguy_t elems[]; } Badguy_list;
+typedef struct { int len; Badguy_t elems[]; } Badguy_varr;
 
 /* SILVER */
 typedef struct {
@@ -85,7 +86,7 @@ typedef struct {
 } Silver_t;
 
 /* SILVER ARR */
-typedef struct { int len; Silver_t elems[]; } Silver_list;
+typedef struct { int len; Silver_t elems[]; } Silver_varr;
 
 /*
    SILVER,
@@ -100,8 +101,8 @@ typedef struct {
     int duration; /* lasting seconds */
     int seed; /* predictable random departure */
     Player_t player;
-    Badguy_list badguy_list;
-    Silver_list silver_list;
+    Badguy_varr badguy_varr;
+    Silver_varr silver_varr;
 } Level_t;
 
 

@@ -20,5 +20,8 @@
 
 int string_toupper(char * string);
 int each_char(char * string, int (*charfunc)(int));
+void string_ins_char(char * s, unsigned int len,
+                     const char input, unsigned int multiply);
+
 
 #endif

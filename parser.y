@@ -6,10 +6,8 @@
 
 
 
-/* how can we move these into .h */
 
 
-struct Keyval { Key key; int val; };
 
 
 extern int yylineno;
@@ -18,17 +16,22 @@ extern int yylineno;
 int yylex();
 void yyerror(char *s);
 
-/* custom */
+/* only needed in here */
+struct Keyval { Key key; int val; };
+
+/* custom funcs */
 struct Keyval * newkeyval(Key k, int v);
 Map_t newmap(const struct Keyval * kv);
+
 
 %}
 
 %union {
 	int num;
 	char * string;
-	int * map;
+	int * map; /* Map_t */
 	struct Keyval * keyval;
+    void * data;
 }
 
 %token <num> OBJECT
@@ -41,6 +44,8 @@ Map_t newmap(const struct Keyval * kv);
 
 %type <keyval> keyval
 %type <map> map
+%type <data> data
+
 /* 
     also used is '{' '}' ',' ':' 
 */
@@ -48,12 +53,12 @@ Map_t newmap(const struct Keyval * kv);
 
 %%
 level : /* zelo */
-	  | level OBJECT value { printf("——>  <%s> \n" ,obj_names[$2]); } 
-      | level OBJECT TXT value { printf("(%s)——> <%s> \n", $3, obj_names[$2]); }
+	  | level OBJECT data { printf("——>  <%s> \n" ,obj_names[$2]); } 
+      | level OBJECT TXT data { printf("(%s)——> <%s> \n", $3, obj_names[$2]); }
 ;
-value : TXT { printf("txt(%s)",$1); }
+data : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
-	  | '{' map '}' { lvl_puts_map( $2,0 ); }
+	  | '{' map '}' { $$ = $2; lvl_puts_map($2,2); }
 	  | SPRITE_BEGIN sprite SPRITE_END { /* calc max len? */ } 
 ; 
 map : keyval     { $$ = newmap($1); free($1); }

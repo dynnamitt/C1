@@ -17,10 +17,12 @@
  */
 #include <stdlib.h>
 #include <ctype.h>
-/*#include <stdio.h>*/
+#include <stdio.h>
 #include <string.h>
 #include "level.h"
 #include "utils.h"
+
+#define MAX_SPACES 40
 
 char * map_key_names[] = { "Quantum", "Time", "Color", "Speed", NULL };
 
@@ -43,7 +45,7 @@ Color color_lookup(const char * k)
 
     char ** p;
     int idx = 0;
-    for(p = colors; *p != NULL; p++, idx++ ) {
+    for(p = colors; *p != NULL; p++, idx++) {
         /*printf("has %s == %s \n", *p, ucase_k);*/
         if(strcmp(*p , ucase_k) == 0) {
             color = (Color)idx;
@@ -56,7 +58,19 @@ Color color_lookup(const char * k)
 }
 
 
-void lvl_puts_map(int * m, int n_tab_pads)
+void lvl_puts_map(Map_t m, int n_pads)
 {
-  
+    int i;
+    char padding[MAX_SPACES] = "";
+    
+    if(n_pads > 0) {
+        string_ins_char(padding,MAX_SPACES,' ',n_pads);
+    }
+
+    for(i = 0; i < NMAPKEYS; i++) {
+        if(m[i] != VAL_UNDEF) {
+            printf("%s%s:%d\n", padding, map_key_names[i], m[i]);
+        }
+    }
 }
+
