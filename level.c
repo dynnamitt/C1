@@ -53,3 +53,9 @@ Color color_lookup(const char * k)
     free(ucase_k);
     return color;
 }
+
+
+void lvl_puts_map(int * m)
+{
+  
+}

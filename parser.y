@@ -11,7 +11,7 @@
 
 struct Keyval { Key key; int val; };
 
-struct Map { int len; struct Keyval * elems[]; };
+typedef int *Map_t;
 
 extern int yylineno;
 
@@ -21,14 +21,14 @@ void yyerror(char *s);
 
 /* custom */
 struct Keyval * newkeyval(Key k, int v);
-struct Map * newmap(const struct Keyval * kv);
+int * newmap(const struct Keyval * kv);
 
 %}
 
 %union {
 	int num;
 	char * string;
-	struct Map * map;
+	int * map;
 	struct Keyval * keyval;
 }
 
@@ -41,6 +41,7 @@ struct Map * newmap(const struct Keyval * kv);
 %token <num> KEY
 
 %type <keyval> keyval
+%type <map> map
 /* 
     also used is '{' '}' ',' ':' 
 */
@@ -53,11 +54,11 @@ level : /* zelo */
 ;
 value : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
-	  | '{' map '}'
+	  | '{' map '}' { lvl_puts_map( $2 ); }
 	  | SPRITE_BEGIN sprite SPRITE_END { /* calc max len? */ } 
 ; 
-map : keyval     { printf("(%s=%d) ", map_key_names[$1->key] , $1->val ); }
-    | map ',' keyval { printf("(%s=%d) ", map_key_names[$3->key] , $3->val ); /* append */ }
+map : keyval     { $$ = newmap($1); free($1); }
+    | map ',' keyval { $1[$3->key] = $3->val; free($3); /* append */ }
 ;
 keyval : KEY ':' TXT { $$ = newkeyval($1, color_lookup($3) ); }
        | KEY ':' INT { $$ = newkeyval($1, $3); }
@@ -70,7 +71,8 @@ sprite : SPRITE_STRING          { printf("%s\n", $1); }
 ;
 %%
 
-struct Keyval * newkeyval(Key k, int v){
+struct Keyval * newkeyval(Key k, int v)
+{
     struct Keyval * kv = malloc( sizeof(struct Keyval) );
     assert(kv && "Cannot create Keyval var.");
     kv->key = k;
@@ -78,18 +80,22 @@ struct Keyval * newkeyval(Key k, int v){
     return kv;
 }
 
-struct Map * newmap(struct Keyval * kv)
+Map_t newmap(const struct Keyval * kv)
 {
-    size_t map_sz1 = sizeof(struct Map) + sizeof(struct Keyval); 
-    struct Map * m = malloc( map_sz1 );
-    assert(m && "Cannot create Map var.");
-    
-    m->len = 1;
-    m->elems[0] = kv;
-    return m;
+    Map_t m = malloc( sizeof(int) * NMAPKEYS ) ; 
+    assert(m && "Cannot create Map_t var.");	
+    int i;
+    for( i = 0; i < NMAPKEYS; i++ ) {
+	    m[i] = UNDEF;
+    }
+    if( kv != NULL) {    
+        m[kv->key] = kv->val;
+    }
+    return (int*)m;
 }
 
-void yyerror( char * s) {
+void yyerror( char * s)
+{
 	fprintf( stderr, "At lineno %d, ", yylineno );
 	fprintf( stderr, "an ERROR, msg: '%s'\n", s );
 	exit(-1);

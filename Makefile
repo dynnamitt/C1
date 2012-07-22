@@ -36,7 +36,7 @@ $(BIN): -lzmq
 $(BIN2):
 
 clean:
-	rm -f $(BIN)
+	rm -f $(BIN) $(BIN2)
 	rm -f *.o
 	rm -f $(PARSER_BIN) $(PARSER_BIN).tab.*
 	rm -f scanner.c

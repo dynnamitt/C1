@@ -19,6 +19,9 @@ typedef enum {
 
 
 /* MapKeys */
+#define NMAPKEYS 4
+#define UNDEF -1
+
 extern char * map_key_names[];
 typedef enum {
     K_QUANTUM,
@@ -26,6 +29,10 @@ typedef enum {
     K_COLOR,
     K_SPEED,
 } Key;
+
+/*  Print a sample map 
+    (w all textual info from 'map_key_names' */
+void lvl_puts_map(int * m);
 
 /* Color ... */
 extern char * colors[];
