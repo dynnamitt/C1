@@ -20,7 +20,6 @@ struct Keyval * newkeyval(Key k, int v);
 Map_t newmap(const struct Keyval * kv);
 Sprite_t sprite_append(Sprite_t sprite, char * str);
 
-
 %}
 
 %union {
@@ -51,14 +50,14 @@ Sprite_t sprite_append(Sprite_t sprite, char * str);
 
 
 %%
-level : /* zelo */
+level : /* zelo */ 
 	  | level OBJECT data { printf("<%s> \n" ,obj_names[$2]); } 
       | level OBJECT TXT data { printf("<%s>——>(%s) \n",  obj_names[$2], $3 ); }
 ;
 data : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
-	  | '{' map '}' { $$ = $2; lvl_puts_map($2,0); }
-	  | SPRITE_BEGIN sprite SPRITE_END { /* calc max len? */ $$ = $2; } 
+	  | '{' map '}' { $$ = $2; lvl_puts_map($2,4); }
+	  | SPRITE_BEGIN sprite SPRITE_END { $$ = $2; lvl_puts_sprite($2,10); } 
 ; 
 map : keyval     { $$ = newmap($1); free($1); }
     | map ',' keyval { $1[$3->key] = $3->val; free($3); /* append */ }
@@ -100,32 +99,34 @@ Map_t newmap(const struct Keyval * kv)
 //! \brief Not quite clever shit yet 
 Sprite_t sprite_append(Sprite_t sprite, char * str)
 {
-    
+   assert(sprite && "Cannot handle NULL ptr."
+        " Need atleast one elem pointing to NULL string");
+
     Sprite_t start_p = sprite;
     int len = 1;
     
     if ( *sprite != NULL ) {
-        
         /* nav to NULL */
-        while(*sprite++) 
-            ;;
+        while(*sprite) 
+            ++sprite;
     
         len += sprite - start_p;
     }
-    puts(str);
-    printf("sprite len = %d\n\n",len);
 
-    size_t sz = sizeof(char**) * (len+1) ;
+    *sprite = str; /* set str into LAST elem */
+
+    ++len;
+    size_t sz = sizeof(char**) * (len) ;
     
     Sprite_t realloced_ptr = (Sprite_t)realloc(start_p, sz);
 
     assert(realloced_ptr && "Cannot expand var.");
 
-    realloced_ptr[len-1] = str;
-    realloced_ptr[len] = NULL;
-    
+    realloced_ptr[len-1] = NULL;
     return realloced_ptr;
 }
+
+
 
 
 void yyerror( char * s)

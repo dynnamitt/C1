@@ -57,11 +57,25 @@ Color color_lookup(const char * k)
     return color;
 }
 
+void lvl_puts_sprite(const Sprite_t sprite, int n_pads)
+{
+  char padding[MAX_SPACES] = ""; /* mutable string */
+  if(n_pads > 0) {
+    string_ins_char(padding, MAX_SPACES, ' ' , n_pads);
+  }
+    
+  Sprite_t ptr = sprite;
+  while(*ptr){
+      printf("%s%s\n", padding, *ptr);
+      ptr++;
+  }
+
+}
 
 void lvl_puts_map(const Map_t m, int n_pads)
 {
     int i;
-    char padding[MAX_SPACES] = "";
+    char padding[MAX_SPACES] = ""; /* mutable string */
 
     if(n_pads > 0) {
         string_ins_char(padding, MAX_SPACES, ' ', n_pads);

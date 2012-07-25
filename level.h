@@ -4,6 +4,9 @@
 
 typedef char **Sprite_t;
 
+void lvl_puts_sprite(const Sprite_t sprite, int n_pads);
+
+
 /* ConfigObjects */
 extern char * obj_names[];
 typedef enum {
