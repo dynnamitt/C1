@@ -100,7 +100,7 @@ Map_t newmap(const struct Keyval * kv)
 Sprite_t sprite_append(Sprite_t sprite, char * str)
 {
    assert(sprite && "Cannot handle NULL ptr."
-        " Need atleast one elem pointing to NULL string");
+        " Need atleast one elem pointing to a NULL string");
 
     Sprite_t start_p = sprite;
     int len = 1;
@@ -115,7 +115,8 @@ Sprite_t sprite_append(Sprite_t sprite, char * str)
 
     *sprite = str; /* set str into LAST elem */
 
-    ++len;
+    ++len; /* VERY IMP! */
+
     size_t sz = sizeof(char**) * (len) ;
     
     Sprite_t realloced_ptr = (Sprite_t)realloc(start_p, sz);
@@ -125,6 +126,11 @@ Sprite_t sprite_append(Sprite_t sprite, char * str)
     realloced_ptr[len-1] = NULL;
     return realloced_ptr;
 }
+
+void push(Object obj, char * text, void * data) {
+    switch
+}
+
 
 
 
@@ -136,7 +142,14 @@ void yyerror( char * s)
 	exit(-1);
 }
 
+Level_t lvl;
+
 int main(){
+    
+    /* TODO: move into parser and return PTR? */
+    lvl = malloc( sizeof(struct Level_t) );
+
     yyparse();
+    /*lvl_puts_level( lvl );*/
     return 0;
 }

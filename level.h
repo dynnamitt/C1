@@ -59,10 +59,10 @@ Color color_lookup(const char * string);
 /*
     PLAYER
 */
-typedef struct {
+typedef struct Player_t {
     Color fresh;
     Color dead;
-    int height; /* we seldom use MAX below */
+    int height; /* just to speed things up */
     Sprite_t sprite_fresh;
     Sprite_t sprite_dead;
 } Player_t;
@@ -70,17 +70,17 @@ typedef struct {
 /*
     BADGUY
 */
-typedef struct {
+typedef struct Badguy_t {
     char * sprite;
     int speed;
     Color color;
 } Badguy_t;
 
-/* BADGUY ARR */
-typedef struct { int len; Badguy_t elems[]; } Badguy_varr;
+/* BADGUY VARARR */
+typedef struct Badguy_varr { int len; Badguy_t elems[]; } Badguy_varr;
 
 /* SILVER */
-typedef struct {
+typedef struct Silver_t {
     char * sprite;
     int quantum;
     int time;
@@ -88,8 +88,8 @@ typedef struct {
     Color color;
 } Silver_t;
 
-/* SILVER ARR */
-typedef struct { int len; Silver_t elems[]; } Silver_varr;
+/* SILVER VARARR */
+typedef struct Silver_varr { int len; Silver_t elems[]; } Silver_varr;
 
 /*
    SILVER,
@@ -100,12 +100,14 @@ typedef struct { int len; Silver_t elems[]; } Silver_varr;
 /*
     LEVEL
 */
-typedef struct {
+void lvl_puts_level(const Level_t lvl);
+
+typedef struct Level_t {
     int duration; /* lasting seconds */
     int seed; /* predictable random departure */
-    Player_t player;
-    Badguy_varr badguy_varr;
-    Silver_varr silver_varr;
+    Player_t * player;
+    Badguy_varr * badguys;
+    Silver_varr * silvers;
 } Level_t;
 
 

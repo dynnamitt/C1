@@ -24,11 +24,14 @@
 
 #define MAX_SPACES 40
 
-char * map_key_names[] = { "Quantum", "Time", "Color", "Speed", NULL };
+char * map_key_names[] = { "Quantum", "Time", "Color", "Speed",
+                           NULL
+                         };
 
 char * obj_names[] = { "Title", "Duration", "Seed", "PlayerAttrib",
                        "PlayerSprite", "Badguy", "Silver", "Frame",
-                       "Bottomline", NULL
+                       "Bottomline",
+                       NULL
                      };
 
 char * colors[] = { "BLACK", "RED", "GREEN", "YELLOW",
@@ -57,18 +60,23 @@ Color color_lookup(const char * k)
     return color;
 }
 
+void lvl_puts_level(const Level_t * lvl)
+{
+
+}
+
 void lvl_puts_sprite(const Sprite_t sprite, int n_pads)
 {
-  char padding[MAX_SPACES] = ""; /* mutable string */
-  if(n_pads > 0) {
-    string_ins_char(padding, MAX_SPACES, ' ' , n_pads);
-  }
-    
-  Sprite_t ptr = sprite;
-  while(*ptr){
-      printf("%s%s\n", padding, *ptr);
-      ptr++;
-  }
+    char padding[MAX_SPACES] = ""; /* mutable string */
+    if(n_pads > 0) {
+        string_ins_char(padding, MAX_SPACES, ' ' , n_pads);
+    }
+
+    Sprite_t ptr = sprite;
+    while(*ptr) {
+        printf("%s%s\n", padding, *ptr);
+        ptr++;
+    }
 
 }
 
