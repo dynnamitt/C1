@@ -54,7 +54,7 @@ int each_char(char * string, int (*charfunc)(int) )
     Inserts \0 after last char inserted 
     or just before len is reached.
 */
-void string_ins_char(char * s, unsigned int len,
+void string_ins_char(char * s, int len,
                      const char input, unsigned int multiply)
 {
     assert(len > 1 && "Cannot fit a thing in the string");

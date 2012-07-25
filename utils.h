@@ -10,7 +10,7 @@
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  KDM (), 
+ *         Author:  KDM (),
  *   Organization:  Dynnamitt.net
  *
  * =====================================================================================
@@ -19,8 +19,10 @@
 #define _UTILS_H
 
 int string_toupper(char * string);
+
 int each_char(char * string, int (*charfunc)(int));
-void string_ins_char(char * s, unsigned int len,
+
+void string_ins_char(char * s, int len,
                      const char input, unsigned int multiply);
 
 

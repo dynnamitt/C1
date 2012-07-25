@@ -23,9 +23,13 @@ run: $(BIN2)
 	valgrind -q ./$(BIN2)
 
 
-$(PARSER_BIN): scanner.c utils.o level.o 
+$(PARSER_BIN): scanner.c utils.o level.o
 
-scanner.c: scanner.l parser.y  
+level.o : utils.h
+
+utils.o: utils.h
+
+scanner.c: scanner.l parser.y level.h utils.h  
 	bison -d $(PARSER_BIN).y
 	flex -o$@ $(subst .c,.l,$@) 
 

@@ -48,6 +48,7 @@ badGuy "v" { speed: 50 , color: green }
 badguy '|' { speed: 200 , color: white }
 badguy '{' { speed: 200 , color: white }
 badguy "{" { speed: 200 , color: white }
+badguy æ { speed: 200 , color: blue  }
 
 
 # Frame(s) for left n right sides.

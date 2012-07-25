@@ -2,7 +2,7 @@
 #define _LEVEL_H
 
 
-typedef char ** Sprite_t;
+typedef char **Sprite_t;
 
 /* ConfigObjects */
 extern char * obj_names[];
@@ -35,7 +35,7 @@ typedef enum {
 
 /*  Print a sample map
     (w all textual info from 'map_key_names' */
-void lvl_puts_map(Map_t m, int n_pads);
+void lvl_puts_map(const Map_t m, int n_pads);
 
 /* Color ... */
 extern char * colors[];

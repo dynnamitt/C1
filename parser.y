@@ -6,10 +6,6 @@
 
 
 
-
-
-
-
 extern int yylineno;
 
 /* funcs */
@@ -22,6 +18,7 @@ struct Keyval { Key key; int val; };
 /* custom funcs */
 struct Keyval * newkeyval(Key k, int v);
 Map_t newmap(const struct Keyval * kv);
+Sprite_t sprite_append(Sprite_t sprite, char * str);
 
 
 %}
@@ -30,6 +27,7 @@ Map_t newmap(const struct Keyval * kv);
 	int num;
 	char * string;
 	int * map; /* Map_t */
+    char ** sprite; /* Sprite_t */
 	struct Keyval * keyval;
     void * data;
 }
@@ -45,6 +43,7 @@ Map_t newmap(const struct Keyval * kv);
 %type <keyval> keyval
 %type <map> map
 %type <data> data
+%type <sprite> sprite
 
 /* 
     also used is '{' '}' ',' ':' 
@@ -53,13 +52,13 @@ Map_t newmap(const struct Keyval * kv);
 
 %%
 level : /* zelo */
-	  | level OBJECT data { printf("——>  <%s> \n" ,obj_names[$2]); } 
-      | level OBJECT TXT data { printf("(%s)——> <%s> \n", $3, obj_names[$2]); }
+	  | level OBJECT data { printf("<%s> \n" ,obj_names[$2]); } 
+      | level OBJECT TXT data { printf("<%s>——>(%s) \n",  obj_names[$2], $3 ); }
 ;
 data : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
-	  | '{' map '}' { $$ = $2; lvl_puts_map($2,2); }
-	  | SPRITE_BEGIN sprite SPRITE_END { /* calc max len? */ } 
+	  | '{' map '}' { $$ = $2; lvl_puts_map($2,0); }
+	  | SPRITE_BEGIN sprite SPRITE_END { /* calc max len? */ $$ = $2; } 
 ; 
 map : keyval     { $$ = newmap($1); free($1); }
     | map ',' keyval { $1[$3->key] = $3->val; free($3); /* append */ }
@@ -70,8 +69,8 @@ keyval : KEY ':' TXT { $$ = newkeyval($1, color_lookup($3) ); }
        | KEY INT { $$ = newkeyval($1, $2); }
 
 ;
-sprite : SPRITE_STRING          { printf("%s\n", $1); }
-       | sprite SPRITE_STRING   { printf("%s\n", $2); /* append */ }
+sprite : SPRITE_STRING          { $$ = sprite_append( calloc(1, sizeof(char**) ) , $1 ); }
+       | sprite SPRITE_STRING   { $$ = sprite_append( $1 , $2 ); }
 ;
 %%
 
@@ -97,6 +96,35 @@ Map_t newmap(const struct Keyval * kv)
     }
     return (int*)m;
 }
+
+//! \brief Clever shit I say! (Only for RELATIVE small arrays)
+Sprite_t sprite_append(Sprite_t sprite, char * str)
+{
+    
+    Sprite_t start_p = sprite;
+    int len = 0;
+    
+    if ( sprite != NULL ) {
+        len++; 
+        /* nav to NULL */
+        while(*++sprite) 
+            ;
+    
+        len += sprite - start_p;
+    }
+
+    size_t sz = sizeof(char**) * (len+1) ;
+    
+    Sprite_t realloced_ptr = (Sprite_t)realloc(start_p, sz);
+
+    assert(realloced_ptr && "Cannot expand var.");
+
+    realloced_ptr[len-1] = str;
+    realloced_ptr[len] = NULL;
+    
+    return realloced_ptr;
+}
+
 
 void yyerror( char * s)
 {

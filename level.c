@@ -58,7 +58,7 @@ Color color_lookup(const char * k)
 }
 
 
-void lvl_puts_map(Map_t m, int n_pads)
+void lvl_puts_map(const Map_t m, int n_pads)
 {
     int i;
     char padding[MAX_SPACES] = "";
@@ -68,11 +68,12 @@ void lvl_puts_map(Map_t m, int n_pads)
     }
 
     for(i = 0; i < NMAPKEYS; i++) {
-        if(m[i] != VAL_UNDEF) {
+        int v = m[i];
+        if(v != VAL_UNDEF) {
             if(K_COLOR != i) {
-                printf("%s%7s : %d\n", padding, map_key_names[i], m[i]);
+                printf("%s%7s : %d\n", padding, map_key_names[i], v);
             } else {
-                printf("%s%7s : %s\n", padding, map_key_names[i], colors[i]);
+                printf("%s%7s : %s\n", padding, map_key_names[i], colors[v]);
             }
         }
     }
