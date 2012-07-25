@@ -69,7 +69,7 @@ keyval : KEY ':' TXT { $$ = newkeyval($1, color_lookup($3) ); }
        | KEY INT { $$ = newkeyval($1, $2); }
 
 ;
-sprite : SPRITE_STRING          { $$ = sprite_append( calloc(1, sizeof(char**) ) , $1 ); }
+sprite : SPRITE_STRING          { $$ = sprite_append( calloc( 1, sizeof(char**) ) , $1 ); }
        | sprite SPRITE_STRING   { $$ = sprite_append( $1 , $2 ); }
 ;
 %%
@@ -97,21 +97,23 @@ Map_t newmap(const struct Keyval * kv)
     return (int*)m;
 }
 
-//! \brief Clever shit I say! (Only for RELATIVE small arrays)
+//! \brief Not quite clever shit yet 
 Sprite_t sprite_append(Sprite_t sprite, char * str)
 {
     
     Sprite_t start_p = sprite;
-    int len = 0;
+    int len = 1;
     
-    if ( sprite != NULL ) {
-        len++; 
+    if ( *sprite != NULL ) {
+        
         /* nav to NULL */
-        while(*++sprite) 
-            ;
+        while(*sprite++) 
+            ;;
     
         len += sprite - start_p;
     }
+    puts(str);
+    printf("sprite len = %d\n\n",len);
 
     size_t sz = sizeof(char**) * (len+1) ;
     
