@@ -4,22 +4,10 @@
 #define SPRITE_SIZE sizeof(char**) 
 typedef char **Sprite_t;
 
+Sprite_t sprite_append(Sprite_t sprite, char * str);
 void lvl_puts_sprite(const Sprite_t sprite, int n_pads);
 
 
-/* ConfigObjects */
-extern char * obj_names[];
-typedef enum {
-    O_TITLE,
-    O_DURATION,
-    O_SEED,
-    O_PLAYER_ATTRIB,
-    O_PLAYER_SPRITE,
-    O_BADGUY,
-    O_SILVER,
-    O_FRAME,
-    O_BOTTOMLINE,
-} Object;
 
 
 /* Color ... */
@@ -87,11 +75,12 @@ typedef struct Level_t {
     char * title;
     int duration; /* lasting seconds */
     int seed; /* predictable random departure */
+    char * bottomline;
     Player_t * player;
     Badguy_varr * badguys;
     Silver_varr * silvers;
 } Level_t;
 
-void lvl_puts_level(const Level_t lvl);
+void lvl_puts_level(const Level_t * lvl);
 
 #endif

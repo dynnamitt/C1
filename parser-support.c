@@ -18,13 +18,26 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include "parser-support.h"
+#include "level.h"
+#include "utils.h"
 
+
+#define MAX_SPACES 40
+
+
+char * obj_names[] = { "Title", "Duration", "Seed", "PlayerAttrib",
+                       "PlayerSprite", "Badguy", "Silver", "Frame",
+                       "Bottomline",
+                       NULL
+                     };
 
 char * map_key_names[] = { "Quantum", "Time", "Color", "Speed",
                            NULL
                          };
 
-void push(Object obj, char * text, void * data)
+void push(Level_t * lvl, const Object obj,
+          const char * text, const void * data)
 {
     switch(obj) {
 
@@ -41,37 +54,6 @@ void yyerror(char * s)
 }
 
 
-//! \brief Not quite clever shit yet
-Sprite_t sprite_append(Sprite_t sprite, char * str)
-{
-    assert(sprite && "Cannot handle NULL ptr."
-           " Need atleast one elem pointing to a NULL string");
-
-    Sprite_t start_p = sprite;
-    int len = 1;
-
-    if(*sprite != NULL) {
-        /* nav to NULL */
-        while(*sprite) {
-            ++sprite;
-        }
-
-        len += sprite - start_p;
-    }
-
-    *sprite = str; /* set str into LAST elem */
-
-    ++len; /* VERY IMP! */
-
-    size_t sz = SPRITE_SIZE * (len) ;
-
-    Sprite_t realloced_ptr = (Sprite_t)realloc(start_p, sz);
-
-    assert(realloced_ptr && "Cannot expand var.");
-
-    realloced_ptr[len - 1] = NULL;
-    return realloced_ptr;
-}
 
 /*
     kv data-struct

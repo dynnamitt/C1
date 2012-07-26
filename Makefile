@@ -31,7 +31,7 @@ utils.o : utils.h
 
 parser-support.o : utils.h level.h parser-support.h
 
-scanner.c: scanner.l parser.y level.h utils.h  
+scanner.c: scanner.l parser.y level.h utils.h parser-support.h
 	bison -d $(PARSER_BIN).y
 	flex -o$@ $(subst .c,.l,$@) 
 

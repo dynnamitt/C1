@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "parser.tab.h"
 #include "level.h"
+#include "parser-support.h"
 
 %}
 

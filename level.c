@@ -19,18 +19,14 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
+
 #include "level.h"
 #include "utils.h"
 
 #define MAX_SPACES 40
 
 
-
-char * obj_names[] = { "Title", "Duration", "Seed", "PlayerAttrib",
-                       "PlayerSprite", "Badguy", "Silver", "Frame",
-                       "Bottomline",
-                       NULL
-                     };
 
 char * colors[] = { "BLACK", "RED", "GREEN", "YELLOW",
                     "BLUE", "MAGENTA", "CYAN", "WHITE",
@@ -56,6 +52,38 @@ Color color_lookup(const char * k)
 
     free(ucase_k);
     return color;
+}
+
+//! \brief Not quite clever shit yet
+Sprite_t sprite_append(Sprite_t sprite, char * str)
+{
+    assert(sprite && "Cannot handle NULL ptr."
+           " Need atleast one elem pointing to a NULL string");
+
+    Sprite_t start_p = sprite;
+    int len = 1;
+
+    if(*sprite != NULL) {
+        /* nav to NULL */
+        while(*sprite) {
+            ++sprite;
+        }
+
+        len += sprite - start_p;
+    }
+
+    *sprite = str; /* set str into LAST elem */
+
+    ++len; /* VERY IMP! */
+
+    size_t sz = SPRITE_SIZE * (len) ;
+
+    Sprite_t realloced_ptr = (Sprite_t)realloc(start_p, sz);
+
+    assert(realloced_ptr && "Cannot expand var.");
+
+    realloced_ptr[len - 1] = NULL;
+    return realloced_ptr;
 }
 
 void lvl_puts_level(const Level_t * lvl)

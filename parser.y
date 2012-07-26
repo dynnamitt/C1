@@ -6,6 +6,7 @@
 #include "parser-support.h"
 
 
+Level_t * lvl;
 %}
 
 %union {
@@ -37,12 +38,12 @@
 
 %%
 level : /* zelo */ 
-	  | level OBJECT data { printf("<%s> \n" ,obj_names[$2]); push( $2, NULL, $3); } 
-      | level OBJECT TXT data { printf("<%s>——>(%s) \n",  obj_names[$2], $3 ); push( $2, $3, $4); }
+	  | level OBJECT data { printf("<%s> \n" ,obj_names[$2]); push( lvl, $2, NULL, $3); } 
+      | level OBJECT TXT data { printf("<%s>——>(%s) \n",  obj_names[$2], $3 ); push( lvl, $2, $3, $4); }
 ;
 data : TXT { printf("txt(%s)",$1); }
 	  | INT { printf("int(%d)",$1); }
-	  | '{' map '}' { $$ = $2; lvl_puts_map($2,4); }
+	  | '{' map '}' { $$ = $2; puts_map($2,4); }
 	  | SPRITE_BEGIN sprite SPRITE_END { $$ = $2; lvl_puts_sprite($2,10); } 
 ; 
 map : keyval     { $$ = newmap($1); free($1); }
@@ -61,7 +62,6 @@ sprite : SPRITE_STRING          { $$ = sprite_append( calloc( 1, SPRITE_SIZE ) ,
 
 
 
-Level_t lvl;
 
 
 
