@@ -1,7 +1,7 @@
 #ifndef _LEVEL_H
 #define _LEVEL_H
 
-
+#define SPRITE_SIZE sizeof(char**) 
 typedef char **Sprite_t;
 
 void lvl_puts_sprite(const Sprite_t sprite, int n_pads);
@@ -21,24 +21,6 @@ typedef enum {
     O_BOTTOMLINE,
 } Object;
 
-
-/* Simple "Maps" */
-#define NMAPKEYS 4
-#define VAL_UNDEF -1
-
-extern char * map_key_names[];
-
-typedef int * Map_t;
-typedef enum {
-    K_QUANTUM,
-    K_TIME,
-    K_COLOR,
-    K_SPEED,
-} Key;
-
-/*  Print a sample map
-    (w all textual info from 'map_key_names' */
-void lvl_puts_map(const Map_t m, int n_pads);
 
 /* Color ... */
 extern char * colors[];
@@ -100,9 +82,9 @@ typedef struct Silver_varr { int len; Silver_t elems[]; } Silver_varr;
 /*
     LEVEL
 */
-void lvl_puts_level(const Level_t lvl);
 
 typedef struct Level_t {
+    char * title;
     int duration; /* lasting seconds */
     int seed; /* predictable random departure */
     Player_t * player;
@@ -110,5 +92,6 @@ typedef struct Level_t {
     Silver_varr * silvers;
 } Level_t;
 
+void lvl_puts_level(const Level_t lvl);
 
 #endif

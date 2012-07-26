@@ -24,9 +24,7 @@
 
 #define MAX_SPACES 40
 
-char * map_key_names[] = { "Quantum", "Time", "Color", "Speed",
-                           NULL
-                         };
+
 
 char * obj_names[] = { "Title", "Duration", "Seed", "PlayerAttrib",
                        "PlayerSprite", "Badguy", "Silver", "Frame",
@@ -80,24 +78,5 @@ void lvl_puts_sprite(const Sprite_t sprite, int n_pads)
 
 }
 
-void lvl_puts_map(const Map_t m, int n_pads)
-{
-    int i;
-    char padding[MAX_SPACES] = ""; /* mutable string */
 
-    if(n_pads > 0) {
-        string_ins_char(padding, MAX_SPACES, ' ', n_pads);
-    }
-
-    for(i = 0; i < NMAPKEYS; i++) {
-        int v = m[i];
-        if(v != VAL_UNDEF) {
-            if(K_COLOR != i) {
-                printf("%s%7s : %d\n", padding, map_key_names[i], v);
-            } else {
-                printf("%s%7s : %s\n", padding, map_key_names[i], colors[v]);
-            }
-        }
-    }
-}
 
